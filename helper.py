@@ -5,6 +5,7 @@ from collections import Counter
 import string
 import emoji
 import nltk
+import os
 nltk.download('punkt',force=True)
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 extract=URLExtract()
@@ -44,8 +45,12 @@ def create_wordcloud(selected_user, df):
     df_wc=wc.generate(df['message'].str.cat(sep=" "))
     return df_wc
 def most_common_words(selected_user, df):
-    f = open("C:/Users/bahul/Desktop/IOMP/stop_hinglish.txt", 'r')
-    stop_words = f.read()
+    
+
+    file_path = os.path.join(os.path.dirname(__file__), "stop_hinglish.txt")
+    with open(file_path, "r", encoding="utf-8") as f:
+        stop_words = f.read()
+
     if selected_user != 'Overall':
         df = df[df['user'] == selected_user]
     temp = df[df['user'] != 'group_notification']
@@ -112,4 +117,5 @@ def compute_sentiment(df, selected_user):
     sentiment_summary = df['sentiment'].value_counts(normalize=True).reset_index()
     sentiment_summary.columns = ['Sentiment', 'Percentage']
     sentiment_summary['Percentage'] = sentiment_summary['Percentage'] * 100
+
     return df, sentiment_summary
