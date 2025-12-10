@@ -9,10 +9,9 @@ import preprocessor
 import helper
 import matplotlib as mpl
 import nltk
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
+import nltk
+nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
 from nltk.tokenize import word_tokenize
 import re
 
@@ -292,3 +291,4 @@ if uploaded_file is not None:
             )
 
             st.plotly_chart(fig, use_container_width=True)
+
