@@ -25,8 +25,9 @@ def most_busy_users(df):
         columns={'index': 'name', 'user': 'percent'})
     return x,df
 def create_wordcloud(selected_user, df):
-    f = open("C:/Users/bahul/Desktop/IOMP/stop_hinglish.txt", 'r')
-    stop_words = f.read()
+    file_path = os.path.join(os.path.dirname(__file__), "stop_hinglish.txt")
+    with open(file_path, "r", encoding="utf-8") as f:
+        stop_words = f.read()
     if selected_user != 'Overall':
         df = df[df['user'] == selected_user]
     temp = df[df['user'] != 'group_notification']
@@ -45,8 +46,6 @@ def create_wordcloud(selected_user, df):
     df_wc=wc.generate(df['message'].str.cat(sep=" "))
     return df_wc
 def most_common_words(selected_user, df):
-    
-
     file_path = os.path.join(os.path.dirname(__file__), "stop_hinglish.txt")
     with open(file_path, "r", encoding="utf-8") as f:
         stop_words = f.read()
